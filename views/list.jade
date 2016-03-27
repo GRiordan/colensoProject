@@ -1,0 +1,26 @@
+extends ../node_modules/jade-bootstrap/_bootstrap
+
+block body
+    +navbar("Colenso Project", "dropdown_menu")
+        +nav_item("/") Home
+        +nav_item("list", "active") File Explorer
+    .container
+        h1=title
+        - var indexOfLast = path.lastIndexOf("/");
+        - var prevDir = path.substring(0,indexOfLast);
+        if prevDir != ""
+            a(href='/list?place=/'+prevDir+'/')
+                +icon("level-up")
+    .container
+        ul
+            each val in place
+
+                - var extension = val.split('.').pop();
+
+                if extension === 'xml'
+                    //goto another page
+                    li: a(href='/viewDoc?doc=/'+path+'/'+val) !{val} extension1 #{extension}
+                    //li: a(href='/') !{val} #{typeOfVal} #{extension}
+                else if extension != 'xml'
+                    li: a(href='/list?place=/'+path+'/'+val) !{val} extension2 #{extension}
+                    //#{typeOfVal} #{extension}

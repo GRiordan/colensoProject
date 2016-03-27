@@ -1,5 +1,15 @@
-extends layout
+extends ../node_modules/jade-bootstrap/_bootstrap
 
-block content
-  h1= title
-  p Welcome to #{title}
+block body
+  +navbar("Colenso Project", "dropdown_menu")
+    +nav_item("/", "active") Home
+    +nav_item("list") File Explorer
+  .container
+    h1=title
+    h2 #{place}
+    h2 !{place}
+  .container
+    p add radio button either search by text or markup
+    form(action="search", method="get")
+      input(type="text", name="searchString")
+      input(type="submit")

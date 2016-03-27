@@ -1,0 +1,21 @@
+extends ../node_modules/jade-bootstrap/_bootstrap
+
+block body
+    +navbar("Colenso Project", "dropdown_menu")
+        +nav_item("/") Home
+        +nav_item("/list") File Explorer
+    .container
+        h3 Currently viewing #{path.split("/").pop()}
+        p add a button to go back to the dir of this file
+        p add button to save raw TEI
+    .container
+        +tab-list(["noXML", "XML", "edit"],0)
+            +tab("noXML","active")
+                p
+                | !{doc}
+            +tab("XML")
+                p
+                | #{doc}
+            +tab("edit")
+                p
+                | This is where you will be able to edit the XML doc
