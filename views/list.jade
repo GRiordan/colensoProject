@@ -14,13 +14,16 @@ block body
     .container
         ul
             each val in place
-
                 - var extension = val.split('.').pop();
-
-                if extension === 'xml'
-                    //goto another page
-                    li: a(href='/viewDoc?doc=/'+path+'/'+val) !{val} extension1 #{extension}
-                    //li: a(href='/') !{val} #{typeOfVal} #{extension}
-                else if extension != 'xml'
-                    li: a(href='/list?place=/'+path+'/'+val) !{val} extension2 #{extension}
-                    //#{typeOfVal} #{extension}
+                - if(extension.length == 4){ extension = extension.slice(0,3); }
+                - var test = extension.length;
+                //-var extension = val.slice(-4,-1);
+                - var isXML = "xml"===extension;
+                    //p #{val}  #{extension}  #{isXML} #{test}
+                    if extension == "xml"
+                        //goto another page
+                        li: a(href='/viewDoc?doc=/'+path+'/'+val) #{val}
+                        //li: a(href='/') !{val} #{typeOfVal} #{extension}
+                    else
+                        li: a(href='/list?place=/'+path+'/'+val) #{val}
+                        //#{typeOfVal} #{extension}
