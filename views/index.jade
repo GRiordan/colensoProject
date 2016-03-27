@@ -1,15 +1,34 @@
 extends ../node_modules/jade-bootstrap/_bootstrap
 
 block body
-  +navbar("Colenso Project", "dropdown_menu")
-    +nav_item("/", "active") Home
-    +nav_item("list") File Explorer
-  .container
-    h1=title
-    h2 #{place}
-    h2 !{place}
-  .container
-    p add radio button either search by text or markup
-    form(action="search", method="get")
-      input(type="text", name="searchString")
-      input(type="submit")
+    +navbar("Colenso Project", "dropdown_menu")
+        +nav_item("/", "active") Home
+        +nav_item("list") File Explorer
+    .container
+        h1=title
+    .container
+        //p add radio button either search by text or markup
+        //form(action="search", method="get")
+            input(type="text", name="searchString")
+            input(type="submit")
+        br
+    .container
+        .jumbotron
+            form(action="search", method="get")
+                .form-group.row
+                    label.col-sm-2.form-control-label(for='searchBar') Search
+                    .col-sm-10
+                        input#searchBar.form-control(type='text', name='searchString' ,placeholder='search query')
+                .form-group.row
+                    .col-sm-10
+                        .radio
+                            label
+                                input#gridRadios1(type='radio', name='gridRadios', value='option1', checked='')
+                                |           Search by Text
+                        .radio
+                            label
+                                input#gridRadios2(type='radio', name='gridRadios', value='option2')
+                                |           Search by XQuery
+                .form-group.row
+                    .col-sm-offset-2.col-sm-10
+                        button.btn.btn-secondary(type='submit') Search
