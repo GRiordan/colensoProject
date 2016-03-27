@@ -5,7 +5,7 @@ block body
         +nav_item("/") Home
         +nav_item("/list") File Explorer
     .container
-        h1 Search page
+        h3 Search page
     .container
         p search type is #{searchType} .
         if searchType == "option1"
@@ -15,3 +15,10 @@ block body
             p
              | you choose to search by XQuery
         p You typed in #{search}.
+    .container
+        h3(style="font-family: 'Calibri', 'Trebuchet MS', sans-serif;") Search Results
+        -var list = searchResult.split("\n");
+        ul
+            each listItem in list
+                li #{listItem}
+        p #{searchResult}

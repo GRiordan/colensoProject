@@ -52,15 +52,32 @@ router.get("/list", function(req, res) {
 router.get('/search', function(req, res){
     var searchParameter = req.query.searchString;
     var searchType = req.query.gridRadios;
-    client.execute("XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';" +
-        "//name[@type = 'place' and position() = 1 and . = '"+searchParameter+"']",
-        function(error, result) {
-            if(error){console.error(error);}
-            else {
-                res.render('search', {title: 'Colenso Project', place: result.result, search: searchParameter, searchType: searchType});
-            }
+    var teiSchema = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';";
+    if(searchType === "option2") {
+        client.execute(teiSchema + searchParameter,
+            function (error, result) {
+                if (error) {
+                    console.error(error);
+                }
+                else {
+                    res.render('search', {
+                        title: 'Colenso Project',
+                        searchResult: result.result,
+                        search: searchParameter,
+                        searchType: searchType
+                    });
+                }
+            });
+    }
+    else if(searchType === "option1"){
+        res.render('search', {
+            title: 'Colenso Project',
+            searchResult: "'this is where a text search will be stored'",
+            search: searchParameter,
+            searchType: searchType
         });
-
+    }
+    ////name[@type = 'place' and position() = 1 and . = '"+searchParameter+"']
     //res.render('search', {title: "Colenso Project", content: req.query.searchString});
 });
 
