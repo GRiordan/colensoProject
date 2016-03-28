@@ -1,11 +1,25 @@
 extends ../node_modules/jade-bootstrap/_bootstrap
 
 block body
-    +navbar("Colenso Project", "dropdown_menu")
-        +nav_item("/", "active") Home
-        +nav_item("list") File Explorer
-    .container
-        h1=title
+
+    nav.navbar.navbar-fixed-top.navbar-default(role='navigation')
+        .container-fluid
+            .navbar-header
+                button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar')
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href='/') Colenso Project
+            #navbar.collapse.navbar-collapse
+                ul.nav.navbar-nav
+                    li.active
+                        a(href='/') Home
+                    li
+                        a(href='/list') File Explorer
+                    li
+                        a(href='/addDoc') Add Document
+    .container(style="padding-top: 70px")
+            h1=title
     .container
         //p add radio button either search by text or markup
         //form(action="search", method="get")
