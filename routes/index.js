@@ -70,12 +70,30 @@ router.get('/search', function(req, res){
             });
     }
     else if(searchType === "option1"){
+        client.execute(teiSchema +
+            "for $n in (collection('Colenso'))\n" +
+            "for $m in $n \n" +
+            "where contains($m, '"+searchParameter+"') = true()\n" +
+            "return db:path($n)",
+            function (error, result) {
+                if (error) {
+                    console.error(error);
+                }
+                else {
+                    res.render('search', {
+                        title: 'Colenso Project',
+                        searchResult: result.result,
+                        search: searchParameter,
+                        searchType: searchType
+                    });
+                }
+            });/*
         res.render('search', {
             title: 'Colenso Project',
             searchResult: "'this is where a text search will be stored'",
             search: searchParameter,
             searchType: searchType
-        });
+        });*/
     }
     ////name[@type = 'place' and position() = 1 and . = '"+searchParameter+"']
     //res.render('search', {title: "Colenso Project", content: req.query.searchString});

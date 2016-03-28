@@ -5,20 +5,16 @@ block body
         +nav_item("/") Home
         +nav_item("/list") File Explorer
     .container
-        h3 Search page
-    .container
-        p search type is #{searchType} .
+        h3(style="font-family: 'Calibri', 'Trebuchet MS', sans-serif;") Search Results
         if searchType == "option1"
             p
-             | you choose to search by text
+                | Searching by text
         else if searchType == "option2"
             p
-             | you choose to search by XQuery
-        p You typed in #{search}.
-    .container
-        h3(style="font-family: 'Calibri', 'Trebuchet MS', sans-serif;") Search Results
+                | searching by XQuery
+        p You searched for #{search}
         -var list = searchResult.split("\n");
         ul
             each listItem in list
                 li #{listItem}
-        p #{searchResult}
+        //p #{searchResult}
