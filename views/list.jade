@@ -8,9 +8,18 @@ block body
         h1=title
         - var indexOfLast = path.lastIndexOf("/");
         - var prevDir = path.substring(0,indexOfLast);
+        -var wholePath = path+"/"+place;
+        -var dirList = path.split("/");
+        -var temp = "";
+        ol.breadcrumb
+            each dir in dirList
+                - temp = temp + dir+ '/';
+
+                li: a(href='/list?place=/'+temp) #{dir}
         if prevDir != ""
-            a(href='/list?place=/'+prevDir+'/')
+            a(href='/list?place=/' + prevDir + '/')
                 +icon("level-up")
+
     .container
         ul
             each val in place
