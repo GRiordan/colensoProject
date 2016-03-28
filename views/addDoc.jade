@@ -1,0 +1,43 @@
+extends ../node_modules/jade-bootstrap/_bootstrap
+
+block body
+    nav.navbar.navbar-fixed-top.navbar-default(role='navigation')
+        .container-fluid
+            .navbar-header
+                button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar')
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href='/') Colenso Project
+            #navbar.collapse.navbar-collapse
+                ul.nav.navbar-nav
+                    li
+                        a(href='/') Home
+                    li
+                        a(href='/list') File Explorer
+                    li.active
+                        a(href='/addDoc') Add Document
+    .container(style="padding-top: 70px")
+        if addDoc == false
+            h6 Please input the file path and where you want to store the file in the database in the form below
+
+        .jumbotron
+            if pathOfFile == ""
+                +alert-danger("Please input the path")
+            if error == true
+                +alert-danger("That Resource does not exist")
+            form(action="addDoc", method="get")
+                .form-group.row
+                    label.col-sm-2.form-control-label(for='pathBar') Path to file
+                    .col-sm-10
+                        input#pathBar.form-control(type='text', name='path' ,placeholder='')
+                .form-group.row
+                    label.col-sm-2.form-control-label(for='dirBar') Place to add in database
+                    .col-sm-10
+                        input#dirBar.form-control(type='text', name='addToo' ,placeholder='')
+                .form-group.row
+                    .col-sm-offset-2.col-sm-10
+                        button.btn.btn-secondary(type='submit') Add to Database
+
+        if addDoc == true
+            p tried to add #{pathOfFile}

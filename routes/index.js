@@ -8,14 +8,6 @@ client.execute("OPEN Colenso");
 /* GET home page. */
 router.get("/", function(req, res) {
     res.render('index', {title: 'Colenso Letter Database', place: 'temp'});
-    /*client.execute("XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';" +
-     "(//name[@type='place'])[1]",
-     function(error, result) {
-     if(error){console.error(error);}
-     else {
-     res.render('index', {title: 'Colenso Project', place: result.result});
-     }
-     });*/
 });
 
 
@@ -54,7 +46,8 @@ router.get('/search', function(req, res){
     var searchType = req.query.gridRadios;
     var teiSchema = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';";
     if(searchType === "option2") {
-        client.execute(teiSchema + searchParameter,
+        client.execute(teiSchema +
+            "for $n in (collection('Colenso/')"+searchParameter+") return db:path($n)",
             function (error, result) {
                 if (error) {
                     console.error(error);
@@ -70,11 +63,12 @@ router.get('/search', function(req, res){
             });
     }
     else if(searchType === "option1"){
-        client.execute(teiSchema +
+        client.execute(/*teiSchema +
             "for $n in (collection('Colenso'))\n" +
             "for $m in $n \n" +
-            "where contains($m, '"+searchParameter+"') = true()\n" +
-            "return db:path($n)",
+            "where matches($m, '"+searchParameter+"') = true()\n" +
+            "return db:path($n)"*/
+            teiSchema + "for $v in .//TEI[. contains text "+searchParameter+"] return db:path($v)",
             function (error, result) {
                 if (error) {
                     console.error(error);
@@ -112,6 +106,39 @@ router.get('/viewDoc', function(req, res){
 //"XQUERY declare namespace tei='http://www.tei-c.org/ns/1.0'; " +
 //  "(doc('"+docPath+"')//tei:p)[1]"
     //res.render('search', {title: "Colenso Project", content: req.query.searchString});
+});
+
+router.get("/addDoc", function(req, res) {
+    var pathToFile = req.query.path;
+    var pathToAdd = req.query.addToo;
+    if(pathToAdd === '') {pathToAdd = "Colenso/"}
+    var teiSchema = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';";
+
+    //initial page
+    if(pathToFile === undefined){
+        res.render('addDoc', {title: 'Colenso Project', addDoc: false, currentPage: "1"})
+    }
+    //page after users submits a file path
+    else{
+        client.execute(teiSchema+
+            "let $path := '"+ pathToFile +"'" +
+            "let $addToo := '"+ pathToAdd + "'" +
+            "return db:add('Colenso', $path, $addToo)",
+            function(error, result){
+                if(error) {
+                    console.error(error);
+                    res.render('addDoc', {title:'Colenso Project', addDoc: false, pathOfFile: pathToFile, error: true})
+                }
+                else if(pathToFile === ""){
+                    res.render('addDoc', {title:'Colenso Project', addDoc: false, pathOfFile: pathToFile, error: false})
+                }
+                else{
+                    res.render('addDoc', {title:'Colenso Project', addDoc: true,  pathOfFile: pathToFile, error: false})
+                }
+            });
+    }
+
+
 });
 
 module.exports = router;
