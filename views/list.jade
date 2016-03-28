@@ -49,3 +49,6 @@ block body
                     else
                         li: a(href='/list?place=/'+path+'/'+val) #{val}
                         //#{typeOfVal} #{extension}
+    span(style="position: fixed; bottom: 18px; right: 10px;")
+        a.well.well-sm(href='#top', onclick="$('html,body').animate({scrollTop:0},'slow');return false;")
+            i.glyphicon.glyphicon-chevron-up
