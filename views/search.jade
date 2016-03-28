@@ -29,8 +29,8 @@ block body
         -var list = searchResult.split("\n");
         ul
             each listItem in list
-                if searchType == "option1"
-                    li: a(href='/viewDoc?doc=/Colenso/' + listItem) #{listItem}
-                else
+                //if searchType == "option1"
+                li: a(href='/viewDoc?doc=/Colenso/' + listItem) #{listItem}
+                //else
                     li #{listItem}
         //p #{searchResult}
