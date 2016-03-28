@@ -6,8 +6,12 @@ block body
         +nav_item("/list") File Explorer
     .container
         h3 Currently viewing #{path.split("/").pop()}
-        p add a button to go back to the dir of this file
-        p add button to save raw TEI
+        -var prevPath = path.substring(0, path.lastIndexOf('/'));
+        .btn-group(role='group', aria-label='...')
+            a.btn.btn-default(href="/list?place=/"+prevPath+'/', type='button') Return to File Explorer
+            a.btn.btn-default(href="#", type='button') Save TEI
+        br
+        br
     .container
         +tab-list(["noXML", "XML", "edit"],0)
             +tab("noXML","active")
