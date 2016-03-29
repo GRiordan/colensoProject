@@ -18,21 +18,41 @@ block body
                     li
                         a(href='/addDoc') Add Document
     .container(style="padding-top: 70px")
-        h3 Currently viewing #{path.split("/").pop()}
-        -var prevPath = path.substring(0, path.lastIndexOf('/'));
-        .btn-group(role='group', aria-label='...')
-            a.btn.btn-default(href="/list?place=/"+prevPath+'/', type='button') Return to File Explorer
-            a.btn.btn-default(href="#", type='button') Save TEI
-        br
-        br
+        .well
+            h3 Currently viewing #{path.split("/").pop()}
+            -var prevPath = path.substring(0, path.lastIndexOf('/'));
+            -var URL = path;
+
+            .btn-group(role='group')
+                a.btn.btn-info(href="/list?place=/"+prevPath+'/', type='button') Return to File Explorer
+                button.btn.btn-info(type='button', data-toggle='modal', data-target='#myModal') Save File
+                #myModal.modal.fade(role='dialog')
+                    .modal-dialog
+                        .modal-content
+                            .modal-header
+                                button.close(type='button', data-dismiss='modal') x
+                                h4.modal-title Saving File #{path.split("/").pop()}
+                            .modal-body
+                                form(action='viewDoc' method="get")
+                                    label.form-control-label(for='searchBar') File Path ie C:/home/temp/xml/doc.xml
+                                    input#searchBar.form-control(type='text', name='saveAt')
+                                    input.form-control(type='text', name='doc' ,value="/" + path).hidden
+                                    br
+                                    button.button.btn.btn-secondary(type='submit') Save
+
+            br
+            br
+
+            if savedTo != undefined
+                +alert-ix-success("File was successfully saved to " + savedTo)
+            else if noDir != undefined
+                +alert-ix-error("Error: Directory was not found")
+
     .container
-        +tab-list(["noXML", "XML", "edit"],0)
-            +tab("noXML","active")
-                p
-                | !{doc}
+        +tab-list(["Text", "XML", "edit"],0)
+            +tab("Text","active")
+                p !{doc}
             +tab("XML")
-                p
-                | #{doc}
+                p #{doc}
             +tab("edit")
-                p
-                | This is where you will be able to edit the XML doc
+                p This is where you will be able to edit the XML doc
