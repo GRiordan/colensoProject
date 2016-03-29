@@ -17,6 +17,25 @@ block body
                         a(href='/list') File Explorer
                     li
                         a(href='/addDoc') Add Document
+                    li
+                        form.navbar-form.navbar-left(action='search', method='get')
+                            .form-group
+                                .input-group
+                                    input.form-control(type='text', placeholder='Search...', name='searchString')
+                                    .input-group-btn
+                                        .btn-group
+                                            button.btn.btn-default(type='submit') Search
+                                            button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+                                                span.caret
+                                            ul.dropdown-menu
+                                                li
+                                                    label
+                                                        input(type='radio', name='gridRadios', value='option1', checked='true')
+                                                        | Search by text
+                                                li
+                                                    label
+                                                        input(type='radio', name='gridRadios', value='option2')
+                                                        | Search by xquery
     .container(style="padding-top: 70px")
         .well
             h3 Currently viewing #{path.split("/").pop()}
