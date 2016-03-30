@@ -63,12 +63,9 @@ router.get('/search', function(req, res){
             });
     }
     else if(searchType === "option1"){
-        client.execute(/*teiSchema +
-            "for $n in (collection('Colenso'))\n" +
-            "for $m in $n \n" +
-            "where matches($m, '"+searchParameter+"') = true()\n" +
-            "return db:path($n)"*/
-            teiSchema + "for $v in .//TEI[. contains text "+searchParameter+"] return db:path($v)",
+        var search = createSearch(searchParameter);
+        console.log(search);
+        client.execute(teiSchema + "for $v in .//TEI[. contains text "+search+"] return db:path($v)",
             function (error, result) {
                 if (error) {
                     console.error(error);
@@ -81,16 +78,8 @@ router.get('/search', function(req, res){
                         searchType: searchType
                     });
                 }
-            });/*
-        res.render('search', {
-            title: 'Colenso Project',
-            searchResult: "'this is where a text search will be stored'",
-            search: searchParameter,
-            searchType: searchType
-        });*/
+            });
     }
-    ////name[@type = 'place' and position() = 1 and . = '"+searchParameter+"']
-    //res.render('search', {title: "Colenso Project", content: req.query.searchString});
 });
 
 router.get('/viewDoc', function(req, res){
@@ -146,10 +135,13 @@ router.get("/addDoc", function(req, res) {
     }
     //page after users submits a file path
     else{
+        console.log(pathToAdd);
+        console.log(pathToFile);
         client.execute("XQUERY\n" +
             "let $path := '"+ pathToFile +"'\n" +
             "let $addToo := '"+ pathToAdd + "'\n" +
             "return (db:add('Colenso', $path, $addToo))",
+            //"ADD TO "+pathToAdd+" "+pathToFile,
             function(error, result){
                 if(error) {
                     console.error(error);
@@ -163,8 +155,45 @@ router.get("/addDoc", function(req, res) {
                 }
             });
     }
-
-
 });
+
+//Helper functions
+
+var createSearch = function(str){
+    // pass in a str ie Dear mr so && how are you today
+    // return string 'Dear mr so'ftand'how are you today'
+    var toReturn = "'";
+
+    var list = str.split(" ");
+
+    for (var i = 0; i < list.length; i++) {
+        if(list[i] === '&&' || list[i] === 'AND'){
+            toReturn += "'ftand'";
+        }
+        else if(list[i] === '||' || list[i] === 'OR'){
+            toReturn += "'ftor'";
+        }
+        else if(list[i] === '!=' || list[i] === 'NOT'){
+            toReturn += "'ftnot'";
+        }
+        else {
+            if(i == list.length - 1
+                || (list[i+1] === '&&'
+                || list[i+1] === 'AND'
+                || list[i+1] === '||'
+                || list[i+1] === 'OR'
+                || list[i+1] === '!='
+                || list[i+1] === 'NOT')){
+                toReturn += list[i];
+            }
+            else {toReturn += list[i]+" ";}
+
+        }
+    }
+
+    toReturn += "'";
+    return toReturn;
+}
+
 
 module.exports = router;
