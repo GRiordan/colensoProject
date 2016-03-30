@@ -151,7 +151,7 @@ router.get("/addDoc", function(req, res) {
                     res.render('addDoc', {title:'Colenso Project', addDoc: false, pathOfFile: pathToFile, error: false})
                 }
                 else{
-                    res.render('addDoc', {title:'Colenso Project', addDoc: true,  pathOfFile: pathToFile, error: false})
+                    res.render('addDoc', {title:'Colenso Project', addDoc: true,  pathOfFile: pathToFile, addedTo: pathToAdd, error: false})
                 }
             });
     }

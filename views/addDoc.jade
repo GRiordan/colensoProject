@@ -38,8 +38,10 @@ block body
                                                         | Search by xquery
 
     .container(style="padding-top: 70px")
-        if addDoc == false
-            h6 Please input the file path and where you want to store the file in the database in the form below
+        .page-header(style="font-family: 'Calibri', 'Trebuchet MS', sans-serif;")
+            h2 Add To Database
+            p Please input the file path and where you want to store the file in the database in the form below
+            p eg input file c:/user/xmlDocs/tempFile.xml to Colenso/Broughton/private_letters/
 
         .jumbotron
             if pathOfFile == ""
@@ -58,6 +60,7 @@ block body
                 .form-group.row
                     .col-sm-offset-2.col-sm-10
                         button.btn.btn-secondary(type='submit') Add to Database
+                if addDoc == true
+                    +alert-ix-success("File was successfully added to " + addedTo)
 
-        if addDoc == true
-            p tried to add #{pathOfFile}
+

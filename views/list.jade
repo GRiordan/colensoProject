@@ -38,7 +38,8 @@ block body
                                                         | Search by xquery
 
     .container(style="padding-top: 70px")
-        h1=title
+        .page-header
+            h2(style="font-family: 'Calibri', 'Trebuchet MS', sans-serif;")=title
         - var indexOfLast = path.lastIndexOf("/");
         - var prevDir = path.substring(0,indexOfLast);
         -var wholePath = path+"/"+place;

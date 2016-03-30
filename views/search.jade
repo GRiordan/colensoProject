@@ -37,14 +37,15 @@ block body
                                                         input(type='radio', name='gridRadios', value='option2')
                                                         | Search by xquery
     .container(style="padding-top: 70px")
-        h3(style="font-family: 'Calibri', 'Trebuchet MS', sans-serif;") Search Results
-        if searchType == "option1"
-            p
-                | Searching by text
-        else if searchType == "option2"
-            p
-                | searching by XQuery
-        p You searched for #{search}
+        .page-header
+            h2(style="font-family: 'Calibri', 'Trebuchet MS', sans-serif;") Search Results
+            if searchType == "option1"
+                p
+                    | Searching by text
+            else if searchType == "option2"
+                p
+                    | searching by XQuery
+            p You searched for #{search}
         -var list = searchResult.split("\n");
         ul
             each listItem in list

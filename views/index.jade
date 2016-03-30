@@ -39,7 +39,18 @@ block body
                                                         | Search by xquery
 
     .container(style="padding-top: 70px")
-            h1=title
+        //.page-header
+            h2(style="font-family: 'Calibri', 'Trebuchet MS', sans-serif;")=title
+        .header.clearfix.page-header
+            nav
+                ul.nav.nav-pills.pull-right
+                    li.active(role='presentation')
+                        a(href='/') Home
+                    li(role='presentation')
+                        a(href='/list') File Explorer
+                    li(role='presentation')
+                        a(href='addDoc') Add Document
+            h2(style="font-family: 'Calibri', 'Trebuchet MS', sans-serif;")=title
     .container
         //p add radio button either search by text or markup
         //form(action="search", method="get")
