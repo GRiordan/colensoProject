@@ -167,22 +167,19 @@ var createSearch = function(str){
     var list = str.split(" ");
 
     for (var i = 0; i < list.length; i++) {
-        if(list[i] === '&&' || list[i] === 'AND'){
+        if(list[i] === 'AND'){
             toReturn += "'ftand'";
         }
-        else if(list[i] === '||' || list[i] === 'OR'){
+        else if(list[i] === 'OR'){
             toReturn += "'ftor'";
         }
-        else if(list[i] === '!=' || list[i] === 'NOT'){
-            toReturn += "'ftnot'";
+        else if(list[i] === 'NOT'){
+            toReturn += "' ftnot'";
         }
         else {
             if(i == list.length - 1
-                || (list[i+1] === '&&'
-                || list[i+1] === 'AND'
-                || list[i+1] === '||'
+                || (list[i+1] === 'AND'
                 || list[i+1] === 'OR'
-                || list[i+1] === '!='
                 || list[i+1] === 'NOT')){
                 toReturn += list[i];
             }
@@ -192,6 +189,8 @@ var createSearch = function(str){
     }
 
     toReturn += "'";
+    toReturn = toReturn.replace("''", "");
+    //toReturn = "'William'ftandftnot'Colenso'"
     return toReturn;
 }
 
