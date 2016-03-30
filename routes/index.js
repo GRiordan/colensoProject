@@ -142,10 +142,10 @@ router.get("/addDoc", function(req, res) {
     }
     //page after users submits a file path
     else{
-        client.execute(teiSchema +
-            "let $path := '"+ pathToFile +"'" +
-            "let $addToo := '"+ pathToAdd + "'" +
-            "return db:add('Colenso', $path, $addToo)",
+        client.execute("XQUERY\n" +
+            "let $path := '"+ pathToFile +"'\n" +
+            "let $addToo := '"+ pathToAdd + "'\n" +
+            "return (db:add('Colenso', $path, $addToo))",
             function(error, result){
                 if(error) {
                     console.error(error);
