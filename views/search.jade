@@ -48,8 +48,8 @@ block body
         -var list = searchResult.split("\n");
         ul
             each listItem in list
-                //if searchType == "option1"
                 li: a(href='/viewDoc?doc=/Colenso/' + listItem + '&type='+searchType+'&search='+search) #{listItem}
-                //else
-                    li #{listItem}
-        //p #{searchResult}
+
+    span(style="position: fixed; bottom: 18px; right: 10px;")
+        a.well.well-sm(href='#top', onclick="$('html,body').animate({scrollTop:0},'slow');return false;")
+            i.glyphicon.glyphicon-chevron-up
