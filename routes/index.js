@@ -97,17 +97,17 @@ router.get('/viewDoc', function(req, res){
     var docPath = req.query.doc;
     var saving = req.query.saveAt;
     docPath = docPath.substring(1);
-
+    var teiSchema = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0'; ";
     client.execute("XQUERY doc('"+docPath+"')",
         function(error, result){
             if(error){console.error(error);}
             else {
                 if(saving === "" || saving === undefined){res.render('viewDoc', {path: docPath, title: 'Colenso Project', doc: result.result});}
                 else {
-                    var path = saving.replace(/\\/g, "\\\\");
+                    //var path = saving.replace(/\\/g, "\\\\");
                     client.execute("XQUERY " +
                         "let $path := '"+saving+"'\n"+
-                        "for $item in db:open('Colenso', '"+docPath+"')\n"+
+                        "for $item in (collection('"+docPath+"'))\n"+
                         "return (" +
                         "file:create-dir(file:parent($path))," +
                         "file:write($path, $item))",
