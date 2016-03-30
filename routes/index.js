@@ -94,6 +94,8 @@ router.get('/search', function(req, res){
 });
 
 router.get('/viewDoc', function(req, res){
+    var searchType = req.query.type;
+    var searchString = req.query.search;
     var docPath = req.query.doc;
     var saving = req.query.saveAt;
     docPath = docPath.substring(1);
@@ -102,7 +104,7 @@ router.get('/viewDoc', function(req, res){
         function(error, result){
             if(error){console.error(error);}
             else {
-                if(saving === "" || saving === undefined){res.render('viewDoc', {path: docPath, title: 'Colenso Project', doc: result.result});}
+                if(saving === "" || saving === undefined){res.render('viewDoc', {path: docPath, title: 'Colenso Project', doc: result.result, type: searchType, search: searchString});}
                 else {
                     //var path = saving.replace(/\\/g, "\\\\");
                     client.execute("XQUERY " +
@@ -114,14 +116,16 @@ router.get('/viewDoc', function(req, res){
                         function (err, result1) {
                             if(err){
                                 console.error(err);
-                                res.render('viewDoc', {path: docPath, title: 'Colenso Project', doc: result.result, savedTo: saving, noDir: true});
+                                res.render('viewDoc', {path: docPath, title: 'Colenso Project', doc: result.result, savedTo: saving, noDir: true, type: searchType, search: searchString});
                             }
                             else {
                                 res.render('viewDoc', {
                                     path: docPath,
                                     title: 'Colenso Project',
                                     doc: result.result,
-                                    savedTo: saving
+                                    savedTo: saving,
+                                    type: searchType,
+                                    search: searchString
                                 });
                             }
                         })

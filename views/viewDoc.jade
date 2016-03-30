@@ -43,7 +43,10 @@ block body
             -var URL = path;
 
             .btn-group(role='group')
-                a.btn.btn-info(href="/list?place=/"+prevPath+'/', type='button') Return to File Explorer
+                if search == undefined
+                    a.btn.btn-info(href="/list?place=/"+prevPath+'/', type='button') Return to File Explorer
+                else
+                    a.btn.btn-info(href="/search?searchString="+search+'&gridRadios='+type, type='button') Return to Search
                 button.btn.btn-info(type='button', data-toggle='modal', data-target='#myModal') Save File
                 #myModal.modal.fade(role='dialog')
                     .modal-dialog

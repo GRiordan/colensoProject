@@ -49,7 +49,7 @@ block body
         ul
             each listItem in list
                 //if searchType == "option1"
-                li: a(href='/viewDoc?doc=/Colenso/' + listItem) #{listItem}
+                li: a(href='/viewDoc?doc=/Colenso/' + listItem + '&type='+searchType+'&search='+search) #{listItem}
                 //else
                     li #{listItem}
         //p #{searchResult}
