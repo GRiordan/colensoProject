@@ -71,10 +71,13 @@ block body
                 +alert-ix-error("Error: Directory was not found")
 
     .container
-        +tab-list(["Text", "XML", "edit"],0)
+        +tab-list(["Text", "XML", "Edit"],0)
             +tab("Text","active")
                 p !{doc}
             +tab("XML")
                 p #{doc}
-            +tab("edit")
-                p This is where you will be able to edit the XML doc
+            +tab("Edit")
+                form(action='viewDoc' method="get")
+                    textarea.form-control(rows='30')
+                        #{doc}
+                //p This is where you will be able to edit the XML doc
